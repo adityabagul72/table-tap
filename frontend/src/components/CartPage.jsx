@@ -4,6 +4,7 @@ import axios from 'axios';
 
 const CartPage = ({ cartItems, removeFromCart }) => {
   const [totalAmount, setTotalAmount] = useState(0);
+  const razorpayKey = import.meta.env.REACT_APP_RAZORPAY_KEY_ID; // Use environment variable
 
   useEffect(() => {
     const total = cartItems.reduce((sum, item) => sum + item.price, 0);
@@ -27,7 +28,7 @@ const CartPage = ({ cartItems, removeFromCart }) => {
       const { orderId } = orderResponse.data;
 
       const options = {
-        key: process.env.REACT_APP_RAZORPAY_KEY_ID, // Access environment variable correctly
+        key: razorpayKey, // Access environment variable correctly
         amount: totalAmount * 100,
         currency: "INR",
         name: "Table Tap",

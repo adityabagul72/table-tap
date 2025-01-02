@@ -75,5 +75,4 @@ const MenuPage = ({ addToCart }) => {
     </div>
   );
 };
-
 export default MenuPage;
