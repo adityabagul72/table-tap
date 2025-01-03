@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const TableSchema = new mongoose.Schema({
     tableID: {
         type: String,

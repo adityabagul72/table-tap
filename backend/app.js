@@ -20,10 +20,12 @@ const tableRoutes = require('./routes/table.route'); // Table routes
 const menuRoutes = require('./routes/menu.route'); // Menu routes
 const cartRoutes = require('./routes/cart.route'); // Cart routes
 const orderRoutes = require('./routes/order.route'); // Order routes
-app.use('/api/tables', tableRoutes); // Routes for tables (QR codes, etc.)
-app.use('/api/menu', menuRoutes); // Routes for menu items
-app.use('/api/cart', cartRoutes); // Routes for cart items
-app.use('/api/order', orderRoutes); // Routes for orders
+const ownerRoutes = require('./routes/owner.route'); // Owner routes
+app.use('/api/tables', tableRoutes) // Routes for tables (QR codes, etc.)
+app.use('/api/menu', menuRoutes) // Routes for menu items
+app.use('/api/cart', cartRoutes) // Routes for cart items
+app.use('/api/order', orderRoutes) // Routes for orders
+app.use('/api/owner',ownerRoutes) // Routes for owner
 
 // Start the server
 const PORT = process.env.PORT || 5000;
