@@ -7,6 +7,7 @@ import MenuItemList from './components/MenuItemList';
 import CartPage from './components/CartPage';
 import AdminLogin from './components/admin/AdminLogin';
 import AdminDashboard from './components/admin/AdminDashboard';
+import BillPage from './components/BillPage';
 
 const App = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -34,6 +35,7 @@ const App = () => {
         <Route path="/menu" element={<MenuPage addToCart={addToCart} />} />
         <Route path="/menu-items" element={<MenuItemList />} />
         <Route path="/cart" element={<CartPage cartItems={cartItems} removeFromCart={removeFromCart} />} />
+        <Route path="/bill" element={<BillPage />} />
         <Route path="/admin/login" element={<AdminLogin setToken={handleSetToken} />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
       </Routes>

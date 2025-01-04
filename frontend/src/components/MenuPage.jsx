@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom'; // To access the table ID from the URL
+import { useParams, Link, useNavigate } from 'react-router-dom'; // To access the table ID from the URL
 import axios from 'axios';
 import { FaShoppingCart, FaList } from 'react-icons/fa';
 import { Toaster, toast } from 'react-hot-toast';
@@ -9,6 +9,7 @@ const MenuPage = ({ addToCart }) => {
   const [menuItems, setMenuItems] = useState([]);
   const [loading, setLoading] = useState(true); // Add a loading state
   const [error, setError] = useState(''); // Add an error state
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch the menu items for the current table
@@ -36,7 +37,11 @@ const MenuPage = ({ addToCart }) => {
     addToCart(item);
     toast.success('Menu item added to cart', { duration: 2000 });
   };
-  
+
+  const handleGoToCart = () => {
+    navigate(`/cart?tableID=${tableID}`);
+  };
+
   return (
     <div className="p-10 min-h-screen" style={{ background: 'linear-gradient(to bottom, #1E293B 80% ,#FFA500 10%,)', fontFamily: 'Poppins, sans-serif' }}>
       <Toaster />
@@ -44,9 +49,9 @@ const MenuPage = ({ addToCart }) => {
         <Link to="/menuItemList" className="font-semibold text-[#1B1833] text-lg flex items-center">
           <FaList className=" text-[#1B1833] mr-2" /> Menu Item List
         </Link>
-        <Link to="/cart" className="text-[#1B1833] font-semibold text-lg flex items-center">
+        <button onClick={handleGoToCart} className="text-[#1B1833] font-semibold text-lg flex items-center">
           <FaShoppingCart className=" text-[#1B1833] mr-2" /> Cart
-        </Link>
+        </button>
       </div>
       <h1 className="text-3xl font-semibold mb-8 text-center text-[#1B1833]">Menus {tableID}</h1>
 
