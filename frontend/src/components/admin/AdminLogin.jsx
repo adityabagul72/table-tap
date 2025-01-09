@@ -42,16 +42,16 @@ const AdminLogin = ({ setToken }) => {
             <input
               type="email"
               {...register('email', { required: 'Email is required' })}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 tracking-tight"
+              className="w-full outline-none px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-200 tracking-tight"
             />
             {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 tracking-tight">Password</label>
+            <label className="block  text-gray-700 tracking-tight">Password</label>
             <input
               type="password"
               {...register('password', { required: 'Password is required' })}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 tracking-tight"
+              className="w-full outline-none px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-200 tracking-tight"
             />
             {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
           </div>

@@ -120,7 +120,7 @@ const CartPage = ({ cartItems, removeFromCart }) => {
         </Link>
       </div>
       <h1 className="text-3xl font-semibold mb-8 text-center text-[#1B1833]">Your Cart</h1>
-
+      
       {cartItems.length === 0 ? (
         <p className="text-center text-white">Your cart is empty.</p>
       ) : (

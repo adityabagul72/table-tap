@@ -1,4 +1,5 @@
 const MenuItem = require('../models/menuItem.model'); // Import the MenuItem model
+const Table = require('../models/table.model'); // Import the Table model (assuming it exists)
 
 // Get all menu items for a specific table
 const getMenuItemsForTable = async (req, res) => {
@@ -15,19 +16,28 @@ const getMenuItemsForTable = async (req, res) => {
   }
 };
 
+// Get all menu items
+const getAllMenuItems = async (req, res) => {
+  try {
+    const menuItems = await MenuItem.find(); // Fetch all menu items
+    res.status(200).json(menuItems); // Send the menu items in the response
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching menu items', error });
+  }
+};
+
 // Create a new menu item
 const createMenuItem = async (req, res) => {
   try {
-    const { tableID, name, description, price, discount, imageURL } = req.body; // Extract data from the request body
+    const { name, description, price, discount, imageURL } = req.body; // Extract data from the request body
     
     // Validate the input
-    if (!tableID || !name || !description || !price) {
+    if (!name || !description || !price) {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
     // Create a new menu item
     const newMenuItem = new MenuItem({
-      tableID,
       name,
       description,
       price,
@@ -83,7 +93,6 @@ const deleteMenuItem = async (req, res) => {
     if (!deletedMenuItem) {
       return res.status(404).json({ message: 'Menu item not found' });
     }
-
     res.status(200).json({ message: 'Menu item deleted successfully' }); // Respond with a success message
   } catch (error) {
     console.error(error);
@@ -91,4 +100,35 @@ const deleteMenuItem = async (req, res) => {
   }
 };
 
-module.exports = { deleteMenuItem, updateMenuItem, createMenuItem, getMenuItemsForTable };
+// Add menu items to all tables
+const addMenuToAllTables = async (req, res) => {
+  try {
+    const { name, description, price, discount, imageURL } = req.body;
+
+    // Validate the input
+    if (!name || !description || !price) {
+      return res.status(400).json({ message: 'All fields are required' });
+    }
+
+    // Fetch all tables
+    const tables = await Table.find();
+
+    // Create a new menu item for each table
+    const menuItems = tables.map((table, index) => ({
+      tableID: `Table${index + 1}`,
+      name,
+      description,
+      price,
+      discount: discount || 0, // Set default discount to 0 if not provided
+      imageURL: imageURL || "" // Default empty string if no image URL provided
+    }));
+
+    // Save all menu items
+    const savedMenuItems = await MenuItem.insertMany(menuItems);
+    res.status(201).json(savedMenuItems);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+module.exports = { addMenuToAllTables, deleteMenuItem, updateMenuItem, createMenuItem, getMenuItemsForTable, getAllMenuItems };

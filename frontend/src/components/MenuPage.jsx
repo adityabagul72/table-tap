@@ -13,7 +13,7 @@ const MenuPage = ({ addToCart }) => {
 
   useEffect(() => {
     // Fetch the menu items for the current table
-    axios.get(`http://localhost:5000/api/menu/${tableID}`)
+    axios.get(`http://localhost:5000/api/menu`)
       .then(response => {
         setMenuItems(response.data); // Set the menu items state
         setLoading(false); // Set loading to false once data is fetched
@@ -23,7 +23,7 @@ const MenuPage = ({ addToCart }) => {
         setLoading(false); // Set loading to false even if there's an error
         console.error('Error fetching menu items:', err);
       });
-  }, [tableID]); // Re-fetch when the tableID changes
+  }, []); // Fetch menu items once when the component mounts
 
   if (loading) {
     return <div className="flex justify-center items-center h-screen">Loading menu...</div>;

@@ -1,4 +1,5 @@
 const express = require('express');
+const { createOrder } = require('../controllers/order.controller'); // Import the createOrder function
 const router = express.Router();
 const Razorpay = require('razorpay');
 const Order = require('../models/order.model');
@@ -35,5 +36,8 @@ router.post('/payment', async (req, res) => {
   await order.save();
   res.json({ message: 'Payment successful' });
 });
+
+// Route for creating a new order
+router.post('/add', createOrder);
 
 module.exports = router;

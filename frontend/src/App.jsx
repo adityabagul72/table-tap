@@ -34,10 +34,10 @@ const App = () => {
         <Route path="/menu/:tableID" element={<MenuPage addToCart={addToCart} />} />
         <Route path="/menu" element={<MenuPage addToCart={addToCart} />} />
         <Route path="/menu-items" element={<MenuItemList />} />
-        <Route path="/cart" element={<CartPage cartItems={cartItems} removeFromCart={removeFromCart} />} />
+        <Route path="/cart" element={<CartPage cartItems={cartItems} removeFromCart={removeFromCart} setCartItems={setCartItems} />} />
         <Route path="/bill" element={<BillPage />} />
         <Route path="/admin/login" element={<AdminLogin setToken={handleSetToken} />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/*" element={<AdminDashboard />} />
       </Routes>
     </Router>
   );
