@@ -32,13 +32,12 @@ const generateTableQRs = async (req, res) => {
                 const qrCodeURL = await generateQRCode(url); // Generate QR code
                 const newTable = new Table({ tableID: table.tableID, qrCodeURL });
                 savedTables.push(await newTable.save());
-            } catch (innerError) {
+            } catch (innerError){
                 console.error(`Error generating QR code for table ${table.tableID}:`, innerError);
                 res.status(500).json({ error: `Error generating QR code for table ${table.tableID}` });
                 return;
             }
         }
-
         res.status(201).json(savedTables); // Return saved tables with QR code URLs
     } catch (error) {
         console.error('Error generating QR codes:', error);
@@ -55,5 +54,4 @@ const getAllTableQRs = async (req, res) => {
         res.status(500).json({ error: 'Error fetching QR codes' });
     }
 };
-
 module.exports = { generateTableQRs, getAllTableQRs };

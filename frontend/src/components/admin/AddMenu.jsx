@@ -39,51 +39,53 @@ const AddMenu = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#F0AEAE]">
+    <div className="rounded-md min-h-screen flex items-center justify-center bg-[#F0AEAE] overflow-hidden">
       <Toaster />
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+      <div className="w-full max-w-4xl px-10 pb-8">
         <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Add Menu</h2>
-        <input
-          type="text"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="p-3 border rounded mb-4 w-full focus:outline-none focus:ring-2 focus:ring-[#C4E5DF]"
-        />
-        <input
-          type="text"
-          placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          className="p-3 border rounded mb-4 w-full focus:outline-none focus:ring-2 focus:ring-[#C4E5DF]"
-        />
-        <input
-          type="number"
-          placeholder="Price"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          className="p-3 border rounded mb-4 w-full focus:outline-none focus:ring-2 focus:ring-[#C4E5DF]"
-        />
-        <input
-          type="number"
-          placeholder="Discount"
-          value={discount}
-          onChange={(e) => setDiscount(e.target.value)}
-          className="p-3 border rounded mb-4 w-full focus:outline-none focus:ring-2 focus:ring-[#C4E5DF]"
-        />
-        <input
-          type="text"
-          placeholder="Image URL"
-          value={imageURL}
-          onChange={(e) => setImageURL(e.target.value)}
-          className="p-3 border rounded mb-4 w-full focus:outline-none focus:ring-2 focus:ring-[#C4E5DF]"
-        />
-        <button
-          onClick={handleAddMenu}
-          className="w-full bg-[#C4E5DF] text-black py-3 rounded-lg font-semibold hover:bg-[#F0AEAE] transition duration-300"
-        >
-          Add Menu
-        </button>
+        <div className="grid grid-cols-1 gap-4">
+          <input
+            type="text"
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="p-3 border rounded-full w-full focus:outline-none focus:ring-2 focus:ring-[#C4E5DF]"
+          />
+          <input
+            type="text"
+            placeholder="Description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="p-3 border rounded-full w-full focus:outline-none focus:ring-2 focus:ring-[#C4E5DF]"
+          />
+          <input
+            type="number"
+            placeholder="Price"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            className="p-3 border rounded-full w-full focus:outline-none focus:ring-2 focus:ring-[#C4E5DF]"
+          />
+          <input
+            type="number"
+            placeholder="Discount"
+            value={discount}
+            onChange={(e) => setDiscount(e.target.value)}
+            className="p-3 border rounded-full w-full focus:outline-none focus:ring-2 focus:ring-[#C4E5DF]"
+          />
+          <input
+            type="text"
+            placeholder="Image URL"
+            value={imageURL}
+            onChange={(e) => setImageURL(e.target.value)}
+            className="p-3 border rounded-full w-full focus:outline-none focus:ring-2 focus:ring-[#C4E5DF]"
+          />
+          <button
+            onClick={handleAddMenu}
+            className="w-full bg-[#C4E5DF] text-black py-3 rounded-full font-semibold hover:bg-[#F0AEAE] transition duration-300"
+          >
+            Add Menu
+          </button>
+        </div>
       </div>
     </div>
   );

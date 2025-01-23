@@ -19,7 +19,10 @@ const CartPage = ({ cartItems, removeFromCart }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const total = cartItems.reduce((sum, item) => sum + item.price, 0);
+    const total = cartItems.reduce((sum, item) => {
+      const discountAmount = item.discount ? (item.price * item.discount) / 100 : 0;
+      return sum + (item.price - discountAmount);
+    }, 0);
     setTotalAmount(total);
   }, [cartItems]);
 
@@ -31,7 +34,7 @@ const CartPage = ({ cartItems, removeFromCart }) => {
       })
       .catch(error => console.error('Error removing item from cart:', error));
   };
-
+  
   const handlePayment = async () => {
     if (!fullName || !email || !contact) {
       toast.error('Please enter all required details', { duration: 2000 });
@@ -67,6 +70,7 @@ const CartPage = ({ cartItems, removeFromCart }) => {
               toast.success('Payment successful', { duration: 2000 });
               navigate('/bill', {
                 state: {
+                  tableID,
                   fullName,
                   email,
                   contact,
@@ -96,7 +100,7 @@ const CartPage = ({ cartItems, removeFromCart }) => {
       toast.error('Payment failed', { duration: 2000 });
     }
   };
-
+  
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -135,7 +139,7 @@ const CartPage = ({ cartItems, removeFromCart }) => {
                 </div>
                 <p className="rounded-md px-1 mb-4 flex-grow">{item.description}</p>
                 <div className="flex justify-between items-center mt-auto">
-                  {item.discount && (
+                  {item.discount !== null && item.discount !== undefined && (
                     <span className="font-normal bg-green-300 text-black px-1 py-1 rounded-xl">{item.discount}% Off</span>
                   )}
                   <button
@@ -151,11 +155,10 @@ const CartPage = ({ cartItems, removeFromCart }) => {
         </div>
       )}
       <div className="text-center mt-8">
-        <h2 className="text-2xl font-semibold text-[#1B1833]">Total: ₹{totalAmount}</h2>
+        <h2 className="text-2xl font-semibold text-[#1B1833]">Total: ₹{totalAmount.toFixed(2)}</h2>
         <button
           className="bg-green-600 font-semibold px-4 py-2 rounded-xl text-white mt-4 transform transition-transform duration-300 hover:scale-105 active:scale-95"
-          onClick={openModal}
-        >
+          onClick={openModal}>
           Pay Now
         </button>
       </div>
@@ -201,7 +204,7 @@ const CartPage = ({ cartItems, removeFromCart }) => {
                         onChange={(e) => setFullName(e.target.value)}
                         className="mt-4 p-2 border rounded-lg w-full"
                         required
-                      />
+                        />
                       <input
                         type="email"
                         placeholder="Enter your email"
@@ -218,7 +221,6 @@ const CartPage = ({ cartItems, removeFromCart }) => {
                         className="mt-4 p-2 border rounded-lg w-full"
                         required />
                     </div>
-
                     <div className="mt-4">
                       <button
                         type="submit"

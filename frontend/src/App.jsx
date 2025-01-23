@@ -10,6 +10,7 @@ import AdminDashboard from './components/admin/AdminDashboard';
 import BillPage from './components/BillPage';
 
 const App = () => {
+  
   const [cartItems, setCartItems] = useState([]);
   const [token, setToken] = useState(localStorage.getItem('token'));
 

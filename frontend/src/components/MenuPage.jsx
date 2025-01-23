@@ -69,7 +69,7 @@ const MenuPage = ({ addToCart }) => {
                 </div>
                 <p className="rounded-md px-1 mb-4 flex-grow">{item.description}</p>
                 <div className="flex justify-between items-center mt-auto">
-                  {item.discount && (
+                  {item.discount !== null && item.discount !== undefined && (
                     <span className="font-normal bg-green-300 text-black px-1 py-1 rounded-xl">{item.discount}% Off</span>
                   )}
                   <button

@@ -3,11 +3,10 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Toaster, toast } from 'react-hot-toast';
-
 const AdminLogin = ({ setToken }) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
-
+  
   const onSubmit = async (data) => {
     try {
       const res = await axios.post('http://localhost:5000/api/owner/login', data);

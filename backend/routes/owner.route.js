@@ -3,10 +3,10 @@ const { registerOwner, loginOwner} = require('../controllers/owner.controller');
 const router = express.Router();
 const authMiddleware = require('../middlewares/auth.middleware');
 
-//Register api for hotel owner/admin
+//Register api for cafe owner/admin
 router.post('/register', registerOwner)
 
-//Login api for hotel owner/admin
+//Login api for cafe owner/admin
 router.post('/login', loginOwner)
 
 router.get('/dashboard', authMiddleware, (req, res) => {

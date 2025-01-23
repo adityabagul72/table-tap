@@ -3,12 +3,14 @@ import { Link, Routes, Route, useNavigate } from 'react-router-dom';
 import AddMenu from './AddMenu';
 import ManageTables from './ManageTables';
 import Notifications from './Notifications';
-import { FaUtensils, FaTable, FaBell, FaSignOutAlt } from 'react-icons/fa';
+import { FaUtensils, FaTable, FaBell, FaSignOutAlt, FaTrash } from 'react-icons/fa';
 import { Toaster, toast } from 'react-hot-toast';
+import axios from 'axios';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [menuItems, setMenuItems] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -18,8 +20,32 @@ const AdminDashboard = () => {
       setTimeout(() => {
         navigate('/admin/login');
       }, 1000);
+    } else {
+      fetchMenuItems();
     }
   }, [navigate]);
+
+  const fetchMenuItems = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/menu');
+      setMenuItems(response.data);
+    } catch (error) {
+      toast.error('Error fetching menu items');
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const token = localStorage.getItem('token');
+      await axios.delete(`http://localhost:5000/api/menu/delete/${id}`, {
+        headers: { 'x-auth-token': token }
+      });
+      setMenuItems(menuItems.filter(item => item._id !== id));
+      toast.success('Menu item deleted successfully');
+    } catch (error) {
+      toast.error('Error deleting menu item');
+    }
+  };
 
   if (!isAuthenticated) {
     return (
@@ -77,6 +103,23 @@ const AdminDashboard = () => {
           <Route path="manage-tables" element={<ManageTables />} />
           <Route path="notifications" element={<Notifications />} />
         </Routes>
+        <div className="mt-8">
+          <h2 className="text-2xl font-semibold mb-4">Menu Items</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {menuItems.map(item => (
+              <div key={item._id} className="bg-white p-4 rounded-lg shadow-md flex justify-between items-center">
+                <div>
+                  <h3 className="text-xl font-semibold">{item.name}</h3>
+                  <p>{item.description}</p>
+                  <p className="font-bold">₹{item.price}</p>
+                </div>
+                <button onClick={() => handleDelete(item._id)} className="text-red-500 hover:text-red-700">
+                  <FaTrash />
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
       </main>
     </div>
   );
